@@ -17,24 +17,37 @@
     <preference name='ui.shelf.height' value='26' />
   </preferences>
   <datasources>
-    <datasource caption='Sheet1 (customer)' inline='true' name='federated.0wx0skv1xku7p01ffct3f05i3xjb' version='18.1'>
+    <datasource caption='customer_order' inline='true' name='federated.0wx0skv1xku7p01ffct3f05i3xjb' version='18.1'>
       <connection class='federated'>
         <named-connections>
           <named-connection caption='customer' name='excel-direct.0rk42001nn1fww1f0xv0e0n5oqzk'>
             <connection class='excel-direct' cleaning='no' compat='no' dataRefreshTime='' filename='/Volumes/Partition1/tableau_xml/customer.xlsx' interpretationMode='0' password='' server='' validate='no' />
           </named-connection>
+          <named-connection caption='order' name='excel-direct.0vbo7l512ldoev13gfq720tbpopf'>
+            <connection class='excel-direct' cleaning='no' compat='no' dataRefreshTime='' filename='/Volumes/Partition1/tableau_xml/order.xlsx' interpretationMode='0' password='' server='' validate='no' />
+          </named-connection>
         </named-connections>
-        <relation connection='excel-direct.0rk42001nn1fww1f0xv0e0n5oqzk' name='Sheet1' table='[Sheet1$]' type='table'>
-          <columns gridOrigin='A1:H6:no:A1:H6:0' header='yes' outcome='6'>
-            <column datatype='integer' name='customer_id' ordinal='0' />
-            <column datatype='string' name='first_name' ordinal='1' />
-            <column datatype='string' name='last_name' ordinal='2' />
-            <column datatype='string' name='city' ordinal='3' />
-            <column datatype='string' name='country' ordinal='4' />
-            <column datatype='integer' name='mobile_no' ordinal='5' />
-            <column datatype='date' name='date_joined' ordinal='6' />
-            <column datatype='integer' name='Salary' ordinal='7' />
-          </columns>
+        <relation type='collection'>
+          <relation connection='excel-direct.0rk42001nn1fww1f0xv0e0n5oqzk' name='Sheet1' table='[Sheet1$]' type='table'>
+            <columns gridOrigin='A1:H6:no:A1:H6:0' header='yes' outcome='6'>
+              <column datatype='integer' name='customer_id' ordinal='0' />
+              <column datatype='string' name='first_name' ordinal='1' />
+              <column datatype='string' name='last_name' ordinal='2' />
+              <column datatype='string' name='city' ordinal='3' />
+              <column datatype='string' name='country' ordinal='4' />
+              <column datatype='integer' name='mobile_no' ordinal='5' />
+              <column datatype='date' name='date_joined' ordinal='6' />
+              <column datatype='integer' name='Salary' ordinal='7' />
+            </columns>
+          </relation>
+          <relation connection='excel-direct.0vbo7l512ldoev13gfq720tbpopf' name='Sheet11' table='[Sheet1$]' type='table'>
+            <columns gridOrigin='A1:D52:no:A1:D52:0' header='yes' outcome='2'>
+              <column datatype='integer' name='cust_id' ordinal='0' />
+              <column datatype='date' name='order_date' ordinal='1' />
+              <column datatype='integer' name='order_amt' ordinal='2' />
+              <column datatype='string' name='product_id' ordinal='3' />
+            </columns>
+          </relation>
         </relation>
         <metadata-records>
           <metadata-record class='capability'>
@@ -49,6 +62,20 @@
               <attribute datatype='string' name='gridOrigin'>&quot;A1:H6:no:A1:H6:0&quot;</attribute>
               <attribute datatype='boolean' name='header'>true</attribute>
               <attribute datatype='integer' name='outcome'>6</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='capability'>
+            <remote-name />
+            <remote-type>0</remote-type>
+            <parent-name>[Sheet11]</parent-name>
+            <remote-alias />
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='integer' name='context'>2</attribute>
+              <attribute datatype='string' name='gridOrigin'>&quot;A1:D52:no:A1:D52:0&quot;</attribute>
+              <attribute datatype='boolean' name='header'>true</attribute>
+              <attribute datatype='integer' name='outcome'>2</attribute>
             </attributes>
           </metadata-record>
           <metadata-record class='column'>
@@ -175,20 +202,86 @@
             </attributes>
             <object-id>[Sheet1_615F98DC2E764BA4B9181C088EFBF450]</object-id>
           </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>cust_id</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[cust_id]</local-name>
+            <parent-name>[Sheet11]</parent-name>
+            <remote-alias>cust_id</remote-alias>
+            <ordinal>8</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
+            </attributes>
+            <object-id>[Sheet1_C309ACA5AD1648768B0E78ACA63D5D65]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>order_date</remote-name>
+            <remote-type>7</remote-type>
+            <local-name>[order_date]</local-name>
+            <parent-name>[Sheet11]</parent-name>
+            <remote-alias>order_date</remote-alias>
+            <ordinal>9</ordinal>
+            <local-type>date</local-type>
+            <aggregation>Year</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;DATE&quot;</attribute>
+            </attributes>
+            <object-id>[Sheet1_C309ACA5AD1648768B0E78ACA63D5D65]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>order_amt</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[order_amt]</local-name>
+            <parent-name>[Sheet11]</parent-name>
+            <remote-alias>order_amt</remote-alias>
+            <ordinal>10</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
+            </attributes>
+            <object-id>[Sheet1_C309ACA5AD1648768B0E78ACA63D5D65]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>product_id</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[product_id]</local-name>
+            <parent-name>[Sheet11]</parent-name>
+            <remote-alias>product_id</remote-alias>
+            <ordinal>11</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='1' name='LEN_RCA_S2' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
+            </attributes>
+            <object-id>[Sheet1_C309ACA5AD1648768B0E78ACA63D5D65]</object-id>
+          </metadata-record>
         </metadata-records>
       </connection>
       <aliases enabled='yes' />
       <column caption='Emp_Name' datatype='string' name='[Calculation_1515250236634828800]' role='dimension' type='nominal'>
         <calculation class='tableau' formula='[first_name]+&apos; &apos;+ [last_name]' />
       </column>
-      <column caption='Sheet1' datatype='table' name='[__tableau_internal_object_id__].[Sheet1_615F98DC2E764BA4B9181C088EFBF450]' role='measure' type='quantitative' />
+      <column caption='customer_sheet' datatype='table' name='[__tableau_internal_object_id__].[Sheet1_615F98DC2E764BA4B9181C088EFBF450]' role='measure' type='quantitative' />
+      <column caption='order_sheet' datatype='table' name='[__tableau_internal_object_id__].[Sheet1_C309ACA5AD1648768B0E78ACA63D5D65]' role='measure' type='quantitative' />
       <column caption='City' datatype='string' name='[city]' role='dimension' semantic-role='[City].[Name]' type='nominal' />
       <column caption='Country' datatype='string' name='[country]' role='dimension' semantic-role='[Country].[ISO3166_2]' type='nominal' />
+      <column caption='Cust Id' datatype='integer' name='[cust_id]' role='dimension' type='ordinal' />
       <column caption='Customer Id' datatype='integer' name='[customer_id]' role='dimension' type='ordinal' />
       <column caption='Date Joined' datatype='date' name='[date_joined]' role='dimension' type='ordinal' />
       <column caption='First Name' datatype='string' name='[first_name]' role='dimension' type='nominal' />
       <column caption='Last Name' datatype='string' name='[last_name]' role='dimension' type='nominal' />
       <column aggregation='Sum' caption='Mobile No' datatype='integer' name='[mobile_no]' role='dimension' type='ordinal' />
+      <column caption='Order Amt' datatype='integer' name='[order_amt]' role='measure' type='quantitative' />
+      <column caption='Order Date' datatype='date' name='[order_date]' role='dimension' type='ordinal' />
+      <column caption='Product Id' datatype='string' name='[product_id]' role='dimension' type='nominal' />
       <drill-paths>
         <drill-path name='country, city'>
           <field>[country]</field>
@@ -201,7 +294,7 @@
       </semantic-values>
       <object-graph>
         <objects>
-          <object caption='Sheet1' id='Sheet1_615F98DC2E764BA4B9181C088EFBF450'>
+          <object caption='customer_sheet' id='Sheet1_615F98DC2E764BA4B9181C088EFBF450'>
             <properties context=''>
               <relation connection='excel-direct.0rk42001nn1fww1f0xv0e0n5oqzk' name='Sheet1' table='[Sheet1$]' type='table'>
                 <columns gridOrigin='A1:H6:no:A1:H6:0' header='yes' outcome='6'>
@@ -217,7 +310,29 @@
               </relation>
             </properties>
           </object>
+          <object caption='order_sheet' id='Sheet1_C309ACA5AD1648768B0E78ACA63D5D65'>
+            <properties context=''>
+              <relation connection='excel-direct.0vbo7l512ldoev13gfq720tbpopf' name='Sheet11' table='[Sheet1$]' type='table'>
+                <columns gridOrigin='A1:D52:no:A1:D52:0' header='yes' outcome='2'>
+                  <column datatype='integer' name='cust_id' ordinal='0' />
+                  <column datatype='date' name='order_date' ordinal='1' />
+                  <column datatype='integer' name='order_amt' ordinal='2' />
+                  <column datatype='string' name='product_id' ordinal='3' />
+                </columns>
+              </relation>
+            </properties>
+          </object>
         </objects>
+        <relationships>
+          <relationship>
+            <expression op='='>
+              <expression op='[customer_id]' />
+              <expression op='[cust_id]' />
+            </expression>
+            <first-end-point object-id='Sheet1_615F98DC2E764BA4B9181C088EFBF450' />
+            <second-end-point object-id='Sheet1_C309ACA5AD1648768B0E78ACA63D5D65' />
+          </relationship>
+        </relationships>
       </object-graph>
     </datasource>
   </datasources>
@@ -226,7 +341,7 @@
       <table>
         <view>
           <datasources>
-            <datasource caption='Sheet1 (customer)' name='federated.0wx0skv1xku7p01ffct3f05i3xjb' />
+            <datasource caption='customer_order' name='federated.0wx0skv1xku7p01ffct3f05i3xjb' />
           </datasources>
           <datasource-dependencies datasource='federated.0wx0skv1xku7p01ffct3f05i3xjb'>
             <column caption='Emp_Name' datatype='string' name='[Calculation_1515250236634828800]' role='dimension' type='nominal'>
